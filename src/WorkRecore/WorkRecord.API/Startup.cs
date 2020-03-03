@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using WorkRecord.Data.Context;
 
 namespace WorkRecord.API
 {
@@ -24,6 +26,13 @@ namespace WorkRecord.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            #region 配置数据库连接
+            services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetSection("ConnectionString").GetSection("DbConnection").Value);
+            });
+            #endregion
+
             services.AddControllers();
         }
 
