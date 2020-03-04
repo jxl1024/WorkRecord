@@ -4,4 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WordRecord.IRepository\WordRecord.IRepository.csproj" />
+    <ProjectReference Include="..\WorkRecord.Data\WorkRecord.Data.csproj" />
+    <ProjectReference Include="..\WorkRecord.Model\WorkRecord.Model.csproj" />
+  </ItemGroup>
+
 </Project>

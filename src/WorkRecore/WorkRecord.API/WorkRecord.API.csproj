@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -11,10 +11,15 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WordRecord.IRepository\WordRecord.IRepository.csproj" />
+    <ProjectReference Include="..\WordRecord.Repository\WordRecord.Repository.csproj" />
     <ProjectReference Include="..\WorkRecord.Data\WorkRecord.Data.csproj" />
+    <ProjectReference Include="..\WorkRecord.IService\WorkRecord.IService.csproj" />
+    <ProjectReference Include="..\WorkRecord.Service\WorkRecord.Service.csproj" />
   </ItemGroup>
 
 
