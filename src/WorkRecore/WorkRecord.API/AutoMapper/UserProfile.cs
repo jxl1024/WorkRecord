@@ -18,13 +18,13 @@ namespace WorkRecord.API.AutoMapper
             //CreateMap<User, UserDto>();
 
             // 将User的Name映射为UserDto的UserName
-            CreateMap<User, UserDto>()
+            CreateMap<User, UserDTO>()
                .ForMember(
-                // 目标
+               // 目标
                destinationMember: des => des.UserName,
-               memberOptions: opt => 
+               memberOptions: opt =>
                // 源
-               opt.MapFrom(mapExpression: src => src.Name));
+               opt.MapFrom(mapExpression: src => src.Name)).ReverseMap();
         }
     }
 }

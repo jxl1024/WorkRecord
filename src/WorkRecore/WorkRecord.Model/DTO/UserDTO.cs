@@ -2,7 +2,7 @@
 
 namespace WorkRecord.Model.DTO
 {
-    public class UserDto 
+    public class UserDTO 
     {
         /// <summary>
         /// 用户ID
