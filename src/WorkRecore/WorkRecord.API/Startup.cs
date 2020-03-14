@@ -1,3 +1,4 @@
+using Autofac;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -41,11 +42,28 @@ namespace WorkRecord.API
                             #endregion
 
             #region 依赖注入
-                    // 使用作用域生命周期
-                    services.AddScoped<IUserService, UserService>();
-                    services.AddScoped<IUserRepository, UserRepository>();
+                    //// 使用作用域生命周期
+                    //services.AddScoped<IUserService, UserService>();
+                    //services.AddScoped<IUserRepository, UserRepository>();
                     #endregion
             services.AddControllers();
+        }
+
+        /// <summary>
+        /// 使用Autofac替换依赖注入容器
+        /// </summary>
+        /// <param name="builder"></param>
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            // 批量注册Repository
+            builder.RegisterAssemblyTypes(typeof(UserRepository).Assembly)
+                .Where(t => t.Name.EndsWith("Repository"))
+                .AsImplementedInterfaces();
+
+            // 批量注册Service
+            builder.RegisterAssemblyTypes(typeof(UserService).Assembly)
+             .Where(t => t.Name.EndsWith("Service"))
+             .AsImplementedInterfaces();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
