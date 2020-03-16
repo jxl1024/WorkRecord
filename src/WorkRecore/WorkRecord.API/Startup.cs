@@ -37,9 +37,11 @@ namespace WorkRecord.API
             #endregion
 
             #region 配置数据库连接
+            string connectionString = Configuration.GetSection("ConnectionString").GetSection("DbConnection").Value;
             services.AddDbContext<AppDbContext>(options =>
                     {
-                        options.UseSqlServer(Configuration.GetSection("ConnectionString").GetSection("DbConnection").Value);
+                       
+                        options.UseSqlServer(connectionString);
                     });
             #endregion
             #region 依赖注入

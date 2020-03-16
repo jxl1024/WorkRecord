@@ -37,17 +37,6 @@ namespace WorkRecord.API.Controllers
             List<WorkItemDTO> listDto = new List<WorkItemDTO>();
             Expression<Func<WorkItem, string>> keySelector = p => p.WorkID;
             IEnumerable<WorkItem> list = await _service.GetPatgeListAsync<string>(pageIndex, pageSize, null, false, keySelector);
-            //// 循环赋值 为了演示方便，只给几个字段赋值
-            //foreach (var item in list)
-            //{
-            //    UserDto entity = new UserDto();
-            //    entity.UserID = item.UserID;
-            //    entity.Name = item.Name;
-            //    entity.Password = item.Password;
-            //    entity.Account = item.Account;
-            //    listDto.Add(entity);
-            //}
-
             // 使用AutoMapper进行自动映射
             listDto = _mapper.Map<List<WorkItemDTO>>(list);
             return listDto;
@@ -55,22 +44,61 @@ namespace WorkRecord.API.Controllers
 
 
         [HttpPost]
-        public async Task<int> Post([FromBody]WorkItem entity)
+        public async Task<ResultMsg> Post([FromBody]WorkItem entity)
         {
             entity.WorkID = Guid.NewGuid().ToString();
-            return await _service.AddAsync(entity);
+            //return await _service.AddAsync(entity);
+
+            ResultMsg msg = new ResultMsg();
+            entity.WorkID = Guid.NewGuid().ToString();
+            int result = await _service.AddAsync(entity);
+            if (result > 0)
+            {
+                msg.Code = 1;
+                msg.Message = "成功";
+            }
+            else
+            {
+                msg.Code = 2;
+                msg.Message = "失败";
+            }
+            return msg;
         }
 
         [HttpDelete]
-        public async Task<int> Delete(string id)
+        public async Task<ResultMsg> Delete(string id)
         {
-            return await _service.DeleteAsync(id);
+            ResultMsg msg = new ResultMsg();
+            int result = await _service.DeleteAsync(id);
+            if (result > 0)
+            {
+                msg.Code = 1;
+                msg.Message = "成功";
+            }
+            else
+            {
+                msg.Code = 2;
+                msg.Message = "失败";
+            }
+            return msg;
         }
 
         [HttpPut]
-        public async Task<int> Put([FromBody]WorkItem entity)
+        public async Task<ResultMsg> Put([FromBody]WorkItem entity)
         {
-            return await _service.UpdateAsync(entity);
+            ResultMsg msg = new ResultMsg();
+            int result = await _service.UpdateAsync(entity);
+            if (result > 0)
+            {
+                msg.Code = 1;
+                msg.Message = "成功";
+            }
+            else
+            {
+                msg.Code = 2;
+                msg.Message = "失败";
+            }
+            return msg;
         }
     }
 }

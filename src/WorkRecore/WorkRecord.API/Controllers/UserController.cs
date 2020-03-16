@@ -34,15 +34,6 @@ namespace WorkRecord.API.Controllers
             _mapper = mapper;
         }
 
-        //[HttpGet]
-        //public async Task<List<User>> GetPageList(int pageIndex, int pageSize)
-        //{
-        //    Expression<Func<User, string>> keySelector = p => p.UserID;
-        //    IEnumerable<User> list = await _service.GetPatgeListAsync<string>(pageIndex, pageSize, null, false, keySelector);
-        //    return list.ToList();
-        //}
-
-
         /// <summary>
         /// 这里修改为返回List<UserDto>类型
         /// </summary>
@@ -55,17 +46,6 @@ namespace WorkRecord.API.Controllers
             List<UserDTO> listDto = new List<UserDTO>();
             Expression<Func<User, string>> keySelector = p => p.UserID;
             IEnumerable<User> list = await _service.GetPatgeListAsync<string>(pageIndex, pageSize, null, false, keySelector);
-            //// 循环赋值 为了演示方便，只给几个字段赋值
-            //foreach (var item in list)
-            //{
-            //    UserDto entity = new UserDto();
-            //    entity.UserID = item.UserID;
-            //    entity.Name = item.Name;
-            //    entity.Password = item.Password;
-            //    entity.Account = item.Account;
-            //    listDto.Add(entity);
-            //}
-
             // 使用AutoMapper进行自动映射
             listDto = _mapper.Map<List<UserDTO>>(list);
             return listDto;
@@ -73,27 +53,63 @@ namespace WorkRecord.API.Controllers
 
 
         [HttpPost]
-        public async Task<int> Post([FromBody]UserDTO entity)
+        public async Task<ResultMsg> Post([FromBody]UserDTO entity)
         {
+            ResultMsg msg = new ResultMsg();
             // UserID赋值
             entity.UserID = Guid.NewGuid().ToString();
 
             // 映射
             User user = _mapper.Map<User>(entity);
-            return await _service.AddAsync(user);
+            int result= await _service.AddAsync(user);
+            if(result>0)
+            {
+                msg.Code = 1;
+                msg.Message = "成功";
+            }
+            else
+            {
+                msg.Code = 2;
+                msg.Message = "失败";
+            }
+            return msg;
         }
 
         [HttpDelete]
-        public async Task<int> Delete(string id)
+        public async Task<ResultMsg> Delete(string id)
         {
-            return await _service.DeleteAsync(id);
+            ResultMsg msg = new ResultMsg();
+            int result= await _service.DeleteAsync(id);
+            if (result > 0)
+            {
+                msg.Code = 1;
+                msg.Message = "成功";
+            }
+            else
+            {
+                msg.Code = 2;
+                msg.Message = "失败";
+            }
+            return msg;
         }
 
         [HttpPut]
-        public async Task<int> Put([FromBody]UserDTO entity)
+        public async Task<ResultMsg> Put([FromBody]UserDTO entity)
         {
+            ResultMsg msg = new ResultMsg();
             User user = _mapper.Map<User>(entity);
-            return await _service.UpdateAsync(user);
+            int result= await _service.UpdateAsync(user);
+            if (result > 0)
+            {
+                msg.Code = 1;
+                msg.Message = "成功";
+            }
+            else
+            {
+                msg.Code = 2;
+                msg.Message = "失败";
+            }
+            return msg;
         }
     }
 }

@@ -15,11 +15,11 @@ namespace WorkRecordTest
         {
             var builder = new WebHostBuilder()
                                 // 指定使用当前目录
-                                .UseContentRoot(Directory.GetCurrentDirectory())
+                                 .UseContentRoot(Directory.GetCurrentDirectory())
                                 // 使用Startup类作为启动类
-                                .UseStartup<Startup>()
+                                .UseStartup<Startup>();
                                 // 设置使用测试环境
-                                .UseEnvironment("Testing");
+                                //.UseEnvironment("Testing");
             var server = new TestServer(builder);
             // 创建HttpClient
             HttpClient client = server.CreateClient();

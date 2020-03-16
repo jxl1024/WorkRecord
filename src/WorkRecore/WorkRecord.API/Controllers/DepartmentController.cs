@@ -42,25 +42,61 @@ namespace WorkRecord.API.Controllers
 
 
         [HttpPost]
-        public async Task<int> Post([FromBody]DepartmentDTO entity)
+        public async Task<ResultMsg> Post([FromBody]DepartmentDTO entity)
         {
+            ResultMsg msg = new ResultMsg();
             entity.DepartmentID = Guid.NewGuid().ToString();
 
             Department dept = _mapper.Map<Department>(entity);
-            return await _service.AddAsync(dept);
+            int result= await _service.AddAsync(dept);
+            if (result > 0)
+            {
+                msg.Code = 1;
+                msg.Message = "成功";
+            }
+            else
+            {
+                msg.Code = 2;
+                msg.Message = "失败";
+            }
+            return msg;
         }
 
         [HttpDelete]
-        public async Task<int> Delete(string id)
+        public async Task<ResultMsg> Delete(string id)
         {
-            return await _service.DeleteAsync(id);
+            ResultMsg msg = new ResultMsg();
+            int result= await _service.DeleteAsync(id);
+            if (result > 0)
+            {
+                msg.Code = 1;
+                msg.Message = "成功";
+            }
+            else
+            {
+                msg.Code = 2;
+                msg.Message = "失败";
+            }
+            return msg;
         }
 
         [HttpPut]
-        public async Task<int> Put([FromBody]DepartmentDTO entity)
+        public async Task<ResultMsg> Put([FromBody]DepartmentDTO entity)
         {
+            ResultMsg msg = new ResultMsg();
             Department dept = _mapper.Map<Department>(entity);
-            return await _service.UpdateAsync(dept);
+            int result= await _service.UpdateAsync(dept);
+            if (result > 0)
+            {
+                msg.Code = 1;
+                msg.Message = "成功";
+            }
+            else
+            {
+                msg.Code = 2;
+                msg.Message = "失败";
+            }
+            return msg;
         }
     }
 }

@@ -32,7 +32,7 @@ namespace WorkRecordTest
         public UserControllerTest(ITestOutputHelper outputHelper)
         {
             var server = new TestServer(WebHost.CreateDefaultBuilder()
-          .UseStartup<Startup>());
+            .UseStartup<Startup>());
             Client = server.CreateClient();
             Output = outputHelper;
         }
@@ -59,20 +59,24 @@ namespace WorkRecordTest
             Assert.Equal(3, list.Count);
         }
 
+        /// <summary>
+        /// 针对Post进行测试
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task Post_ShouldBe_ok()
         {
             // 1、Arrange
             UserDTO entity = new UserDTO()
             {
-             Password= "E10ADC3949BA59ABBE56E057F20F883E",
-             UserName ="测试",
-             Account="test",
-             CreatedUserId= "8d19734d-5781-4f54-b31c-4258cf7e3424",
-             UpdatedUserId= "8d19734d-5781-4f54-b31c-4258cf7e3424",
-             RoleID= "39b5f16c-5321-4ef9-934d-3bad00e5f640",
-             DepartmentID= "127ba6cf-6f64-4a31-90a0-5078c7850fd3",
-             IsDel=false
+                Password = "E10ADC3949BA59ABBE56E057F20F883E",
+                UserName = "test",
+                Account = "test",
+                CreatedUserId = "8d19734d-5781-4f54-b31c-4258cf7e3424",
+                UpdatedUserId = "8d19734d-5781-4f54-b31c-4258cf7e3424",
+                RoleID = "39b5f16c-5321-4ef9-934d-3bad00e5f640",
+                DepartmentID = "127ba6cf-6f64-4a31-90a0-5078c7850fd3",
+                IsDel = false
             };
 
             var str = JsonConvert.SerializeObject(entity);
@@ -89,21 +93,19 @@ namespace WorkRecordTest
             Assert.Equal("1", responseBody);
         }
 
+        /// <summary>
+        /// Put
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task Put_ShouldBe_Ok()
         {
             // 1、Arrange
             UserDTO entity = new UserDTO()
             {
-                UserID= "d05f4164-09ab-4d54-8c0a-70b4ded3e7a5",
-                UserName = "测试2312312312",
+                UserID = "98fc4b4e-0c62-4f6a-8d61-df348b04d8a4",
+                UserName = "test2312312312",
                 Password = "E10ADC3949BA59ABBE56E057F20F883E",
-                //Account = "test",
-                //CreatedUserId = "8d19734d-5781-4f54-b31c-4258cf7e3424",
-                //UpdatedUserId = "8d19734d-5781-4f54-b31c-4258cf7e3424",
-                //RoleID = "39b5f16c-5321-4ef9-934d-3bad00e5f640",
-                //DepartmentID = "127ba6cf-6f64-4a31-90a0-5078c7850fd3",
-                //IsDel = false
             };
 
             var str = JsonConvert.SerializeObject(entity);
@@ -120,11 +122,15 @@ namespace WorkRecordTest
             Assert.Equal("1", responseBody);
         }
 
+        /// <summary>
+        /// Delete
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task Delete_ShouldBe_Ok()
         {
             // 1
-            string id = "dc7b8fee-2f69-4754-82e9-32ac0a886b68";
+            string id = "98fc4b4e-0c62-4f6a-8d61-df348b04d8a4";
             // 2、Act
             var response = await Client.DeleteAsync($"api/user?id={id}");
 

@@ -34,7 +34,9 @@ namespace WordRecord.Repository.Repositories
             User entity = _dbContext.Users.Find(id);
             if (entity != null)
             {
-                _dbContext.Users.Remove(entity);
+                // 设置状态为true
+                entity.IsDel = true;
+                _dbContext.Entry<User>(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 return await _dbContext.SaveChangesAsync();
             }
             return 0;

@@ -49,22 +49,58 @@ namespace WorkRecord.API.Controllers
 
 
         [HttpPost]
-        public async Task<int> Post([FromBody]Role entity)
+        public async Task<ResultMsg> Post([FromBody]Role entity)
         {
+            ResultMsg msg = new ResultMsg();
             entity.RoleID = Guid.NewGuid().ToString();
-            return await _service.AddAsync(entity);
+            int result= await _service.AddAsync(entity);
+            if (result > 0)
+            {
+                msg.Code = 1;
+                msg.Message = "成功";
+            }
+            else
+            {
+                msg.Code = 2;
+                msg.Message = "失败";
+            }
+            return msg;
         }
 
         [HttpDelete]
-        public async Task<int> Delete(string id)
+        public async Task<ResultMsg> Delete(string id)
         {
-            return await _service.DeleteAsync(id);
+            ResultMsg msg = new ResultMsg();
+            int result = await _service.DeleteAsync(id);
+            if (result > 0)
+            {
+                msg.Code = 1;
+                msg.Message = "成功";
+            }
+            else
+            {
+                msg.Code = 2;
+                msg.Message = "失败";
+            }
+            return msg;
         }
 
         [HttpPut]
-        public async Task<int> Put([FromBody]Role entity)
+        public async Task<ResultMsg> Put([FromBody]Role entity)
         {
-            return await _service.UpdateAsync(entity);
+            ResultMsg msg = new ResultMsg();
+            int result = await _service.UpdateAsync(entity);
+            if (result > 0)
+            {
+                msg.Code = 1;
+                msg.Message = "成功";
+            }
+            else
+            {
+                msg.Code = 2;
+                msg.Message = "失败";
+            }
+            return msg;
         }
     }
 }
