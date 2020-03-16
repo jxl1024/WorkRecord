@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Reflection;
 using WordRecord.IRepository.Repository;
 using WordRecord.Repository.Repositories;
 using WorkRecord.Data.Context;
@@ -31,21 +32,21 @@ namespace WorkRecord.API
             #region 使用AutoMapper
             // 参数类型是Assembly类型的数组 表示AutoMapper将在这些程序集数组里面遍历寻找所有继承了Profile类的配置文件
             // 在当前作用域的所有程序集里面扫描AutoMapper的配置文件
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            // services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAutoMapper(Assembly.Load("WorkRecord.API"));
             #endregion
 
             #region 配置数据库连接
-                    services.AddDbContext<AppDbContext>(options =>
-                            {
-                                options.UseSqlServer(Configuration.GetSection("ConnectionString").GetSection("DbConnection").Value);
-                            });
-                            #endregion
-
+            services.AddDbContext<AppDbContext>(options =>
+                    {
+                        options.UseSqlServer(Configuration.GetSection("ConnectionString").GetSection("DbConnection").Value);
+                    });
+            #endregion
             #region 依赖注入
-                    //// 使用作用域生命周期
-                    //services.AddScoped<IUserService, UserService>();
-                    //services.AddScoped<IUserRepository, UserRepository>();
-                    #endregion
+            //// 使用作用域生命周期
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            #endregion
             services.AddControllers();
         }
 
@@ -53,18 +54,20 @@ namespace WorkRecord.API
         /// 使用Autofac替换依赖注入容器
         /// </summary>
         /// <param name="builder"></param>
-        public void ConfigureContainer(ContainerBuilder builder)
-        {
-            // 批量注册Repository
-            builder.RegisterAssemblyTypes(typeof(UserRepository).Assembly)
-                .Where(t => t.Name.EndsWith("Repository"))
-                .AsImplementedInterfaces();
+        //public void ConfigureContainer(ContainerBuilder builder)
+        //{
+        //    // 批量注册Repository
+        //    builder.RegisterAssemblyTypes(typeof(UserRepository).Assembly)
+        //        .Where(t => t.Name.EndsWith("Repository"))
+        //        .AsImplementedInterfaces();
 
-            // 批量注册Service
-            builder.RegisterAssemblyTypes(typeof(UserService).Assembly)
-             .Where(t => t.Name.EndsWith("Service"))
-             .AsImplementedInterfaces();
-        }
+        //    // 批量注册Service
+        //    builder.RegisterAssemblyTypes(typeof(UserService).Assembly)
+        //     .Where(t => t.Name.EndsWith("Service"))
+        //     .AsImplementedInterfaces();
+
+        //    //builder.RegisterModule(new AutofacModule());
+        //}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

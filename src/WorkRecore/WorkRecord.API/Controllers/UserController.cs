@@ -73,10 +73,14 @@ namespace WorkRecord.API.Controllers
 
 
         [HttpPost]
-        public async Task<int> Post([FromBody]User entity)
+        public async Task<int> Post([FromBody]UserDTO entity)
         {
+            // UserID赋值
             entity.UserID = Guid.NewGuid().ToString();
-            return await _service.AddAsync(entity);
+
+            // 映射
+            User user = _mapper.Map<User>(entity);
+            return await _service.AddAsync(user);
         }
 
         [HttpDelete]
@@ -86,9 +90,10 @@ namespace WorkRecord.API.Controllers
         }
 
         [HttpPut]
-        public async Task<int> Put([FromBody]User entity)
+        public async Task<int> Put([FromBody]UserDTO entity)
         {
-            return await _service.UpdateAsync(entity);
+            User user = _mapper.Map<User>(entity);
+            return await _service.UpdateAsync(user);
         }
     }
 }
