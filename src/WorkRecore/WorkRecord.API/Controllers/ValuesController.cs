@@ -14,7 +14,7 @@ namespace WorkRecord.API.Controllers
         [HttpGet]
         public ActionResult<string> Get()
         {
-            return "Success";
+            return "Access Success";
         }
     }
 }
