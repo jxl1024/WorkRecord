@@ -44,6 +44,7 @@ namespace WorkRecord.API
                         options.UseSqlServer(connectionString);
                     });
             #endregion
+
             #region 依赖注入
             //// 使用作用域生命周期
             services.AddScoped<IUserService, UserService>();

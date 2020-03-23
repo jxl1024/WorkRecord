@@ -24,10 +24,10 @@ namespace WorkRecord.API.Controllers
         }
 
         /// <summary>
-        /// 这里修改为返回List<UserDto>类型
+        /// 分页获取数据
         /// </summary>
-        /// <param name="pageIndex"></param>
-        /// <param name="pageSize"></param>
+        /// <param name="pageIndex">当前页</param>
+        /// <param name="pageSize">每页显示的条数</param>
         /// <returns></returns>
         [HttpGet]
         public async Task<List<DepartmentDTO>> GetPageList(int pageIndex, int pageSize)
@@ -40,7 +40,11 @@ namespace WorkRecord.API.Controllers
             return listDto;
         }
 
-
+        /// <summary>
+        /// 新增部门
+        /// </summary>
+        /// <param name="entity">部门实体</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ResultMsg> Post([FromBody]DepartmentDTO entity)
         {
@@ -62,6 +66,11 @@ namespace WorkRecord.API.Controllers
             return msg;
         }
 
+        /// <summary>
+        /// 删除部门
+        /// </summary>
+        /// <param name="id">部门ID</param>
+        /// <returns></returns>
         [HttpDelete]
         public async Task<ResultMsg> Delete(string id)
         {
@@ -80,6 +89,11 @@ namespace WorkRecord.API.Controllers
             return msg;
         }
 
+        /// <summary>
+        /// 更新部门
+        /// </summary>
+        /// <param name="entity">部门实体</param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<ResultMsg> Put([FromBody]DepartmentDTO entity)
         {
