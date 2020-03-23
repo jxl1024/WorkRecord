@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.6.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.6.0" />
+    <PackageReference Include="System.Security.Claims" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WordRecord.IRepository\WordRecord.IRepository.csproj" />
+    <ProjectReference Include="..\WordRecord.Repository\WordRecord.Repository.csproj" />
+    <ProjectReference Include="..\WorkRecord.Data\WorkRecord.Data.csproj" />
+    <ProjectReference Include="..\WorkRecord.IService\WorkRecord.IService.csproj" />
+    <ProjectReference Include="..\WorkRecord.Model\WorkRecord.Model.csproj" />
+    <ProjectReference Include="..\WorkRecord.Service\WorkRecord.Service.csproj" />
+  </ItemGroup>
+
+
+</Project>
