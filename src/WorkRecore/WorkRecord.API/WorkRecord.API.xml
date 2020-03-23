@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WorkRecord.API</name>
+    </assembly>
+    <members>
+        <member name="M:WorkRecord.API.AutoMapper.DepartmentProfile.#ctor">
+            <summary>
+            构造函数来创建映射关系
+            </summary>
+        </member>
+        <member name="M:WorkRecord.API.AutoMapper.RoleProfile.#ctor">
+            <summary>
+            构造函数来创建映射关系
+            </summary>
+        </member>
+        <member name="T:WorkRecord.API.AutoMapper.UserProfile">
+            <summary>
+            继承自AutoMapper的Profile
+            </summary>
+        </member>
+        <member name="M:WorkRecord.API.AutoMapper.UserProfile.#ctor">
+            <summary>
+            构造函数来创建映射关系
+            </summary>
+        </member>
+        <member name="M:WorkRecord.API.AutoMapper.WorkItemProfile.#ctor">
+            <summary>
+            构造函数来创建映射关系
+            </summary>
+        </member>
+        <member name="M:WorkRecord.API.Controllers.DepartmentController.GetPageList(System.Int32,System.Int32)">
+            <summary>
+            分页获取数据
+            </summary>
+            <param name="pageIndex">当前页</param>
+            <param name="pageSize">每页显示的条数</param>
+            <returns></returns>
+        </member>
+        <member name="M:WorkRecord.API.Controllers.DepartmentController.Post(WorkRecord.Model.DTO.DepartmentDTO)">
+            <summary>
+            新增部门
+            </summary>
+            <param name="entity">部门实体</param>
+            <returns></returns>
+        </member>
+        <member name="M:WorkRecord.API.Controllers.DepartmentController.Delete(System.String)">
+            <summary>
+            删除部门
+            </summary>
+            <param name="id">部门ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:WorkRecord.API.Controllers.DepartmentController.Put(WorkRecord.Model.DTO.DepartmentDTO)">
+            <summary>
+            更新部门
+            </summary>
+            <param name="entity">部门实体</param>
+            <returns></returns>
+        </member>
+        <member name="M:WorkRecord.API.Controllers.RoleController.#ctor(WorkRecord.IService.Service.IRoleService,AutoMapper.IMapper)">
+            <summary>
+            构造函数注入
+            </summary>
+            <param name="service"></param>
+        </member>
+        <member name="M:WorkRecord.API.Controllers.RoleController.GetPageList(System.Int32,System.Int32)">
+            <summary>
+            分页获取角色信息
+            </summary>
+            <param name="pageIndex">当前页码</param>
+            <param name="pageSize">每页显示的条数</param>
+            <returns></returns>
+        </member>
+        <member name="M:WorkRecord.API.Controllers.RoleController.Post(WorkRecord.Model.Entity.Role)">
+            <summary>
+            新增角色信息
+            </summary>
+            <param name="entity">角色实体</param>
+            <returns></returns>
+        </member>
+        <member name="M:WorkRecord.API.Controllers.RoleController.Delete(System.String)">
+            <summary>
+            删除角色
+            </summary>
+            <param name="id">角色ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:WorkRecord.API.Controllers.RoleController.Put(WorkRecord.Model.Entity.Role)">
+            <summary>
+            更新角色信息
+            </summary>
+            <param name="entity">角色实体</param>
+            <returns></returns>
+        </member>
+        <member name="T:WorkRecord.API.Controllers.UserController">
+            <summary>
+            User控制器
+            这里修改路由
+            </summary>
+        </member>
+        <member name="M:WorkRecord.API.Controllers.UserController.#ctor(WorkRecord.IService.Service.IUserService,AutoMapper.IMapper)">
+            <summary>
+            构造函数注入
+            </summary>
+            <param name="service"></param>
+        </member>
+        <member name="M:WorkRecord.API.Controllers.UserController.GetPageList(System.Int32,System.Int32)">
+            <summary>
+            分页获取用户数据
+            </summary>
+            <param name="pageIndex">当前页码</param>
+            <param name="pageSize">每页显示的条数</param>
+            <returns></returns>
+        </member>
+        <member name="M:WorkRecord.API.Controllers.UserController.Post(WorkRecord.Model.DTO.UserDTO)">
+            <summary>
+            新增用户信息
+            </summary>
+            <param name="entity">用户信息实体</param>
+            <returns></returns>
+        </member>
+        <member name="M:WorkRecord.API.Controllers.UserController.Delete(System.String)">
+            <summary>
+            根据用户ID删除用户
+            </summary>
+            <param name="id">用户ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:WorkRecord.API.Controllers.UserController.Put(WorkRecord.Model.DTO.UserDTO)">
+            <summary>
+            更新用户信息
+            </summary>
+            <param name="entity">用户信息实体</param>
+            <returns></returns>
+        </member>
+        <member name="M:WorkRecord.API.Controllers.WorkItemController.GetPageList(System.Int32,System.Int32)">
+            <summary>
+            分页获取日志信息
+            </summary>
+            <param name="pageIndex">当前页码</param>
+            <param name="pageSize">每页显示的条数</param>
+            <returns></returns>
+        </member>
+        <member name="M:WorkRecord.API.Controllers.WorkItemController.Post(WorkRecord.Model.Entity.WorkItem)">
+            <summary>
+            新增日志信息
+            </summary>
+            <param name="entity">日志实体</param>
+            <returns></returns>
+        </member>
+        <member name="M:WorkRecord.API.Controllers.WorkItemController.Delete(System.String)">
+            <summary>
+            根据日志ID删除日志
+            </summary>
+            <param name="id">日志ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:WorkRecord.API.Controllers.WorkItemController.Put(WorkRecord.Model.Entity.WorkItem)">
+            <summary>
+            更新日志
+            </summary>
+            <param name="entity">日志信息实体</param>
+            <returns></returns>
+        </member>
+        <member name="M:WorkRecord.API.Startup.ConfigureContainer(Autofac.ContainerBuilder)">
+            <summary>
+            使用Autofac替换依赖注入容器
+            </summary>
+            <param name="builder"></param>
+        </member>
+    </members>
+</doc>
