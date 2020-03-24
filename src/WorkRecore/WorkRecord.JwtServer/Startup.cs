@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,8 @@ using WordRecord.IRepository.Repository;
 using WordRecord.Repository.Repositories;
 using WorkRecord.Data.Context;
 using WorkRecord.IService.Service;
+using WorkRecord.JwtServer.Jwt;
+using WorkRecord.Model.Jwt;
 using WorkRecord.Service.Service;
 
 namespace WorkRecord.JwtServer
@@ -39,6 +42,15 @@ namespace WorkRecord.JwtServer
 
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<ILoginRepository, LoginRepository>();
+            services.AddScoped<ITokenHelper, TokenHelper>();
+            // 读取appsettings.json文件
+            services.Configure<JWTConfig>(Configuration.GetSection("JWT"));
+            // 启用JWT认证
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer();
             services.AddControllers();
         }
 
@@ -52,6 +64,8 @@ namespace WorkRecord.JwtServer
 
             app.UseRouting();
 
+            // 启用认证中间件
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

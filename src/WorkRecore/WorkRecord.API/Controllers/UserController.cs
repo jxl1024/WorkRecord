@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WorkRecord.IService.Service;
 using WorkRecord.Model.DTO;
@@ -18,6 +19,7 @@ namespace WorkRecord.API.Controllers
     // [Route("api/[controller]")]
     [Route("api/user")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         // AutoMapper
@@ -41,6 +43,7 @@ namespace WorkRecord.API.Controllers
         /// <param name="pageSize">每页显示的条数</param>
         /// <returns></returns>
         [HttpGet]
+        [AllowAnonymous]
         public async Task<List<UserDTO>> GetPageList(int pageIndex, int pageSize)
         {
             List<UserDTO> listDto = new List<UserDTO>();

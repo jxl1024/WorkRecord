@@ -1,19 +1,23 @@
 using Autofac;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using WordRecord.IRepository.Repository;
 using WordRecord.Repository.Repositories;
 using WorkRecord.Data.Context;
 using WorkRecord.IService.Service;
+using WorkRecord.Model.Jwt;
 using WorkRecord.Service.Service;
 
 namespace WorkRecord.API
@@ -30,6 +34,31 @@ namespace WorkRecord.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            #region 读取配置
+            JWTConfig config = new JWTConfig();
+            Configuration.GetSection("JWT").Bind(config);
+            #endregion
+
+
+            #region 启用JWT认证
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = config.Issuer,
+                    ValidAudience = config.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.IssuerSigningKey)),
+                    ClockSkew = TimeSpan.FromMinutes(1)
+
+                };
+            });
+            #endregion
+
 
             #region 使用AutoMapper
             // 参数类型是Assembly类型的数组 表示AutoMapper将在这些程序集数组里面遍历寻找所有继承了Profile类的配置文件
@@ -102,6 +131,8 @@ namespace WorkRecord.API
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "WorkRecord v1");
             });
 
+            // 启用身份认证
+            app.UseAuthentication();
             app.UseRouting();
 
             app.UseAuthorization();
