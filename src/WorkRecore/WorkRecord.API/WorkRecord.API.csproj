@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>Edison.Jiang</Authors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -21,14 +22,11 @@
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.2.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\WordRecord.IRepository\WordRecord.IRepository.csproj" />
-    <ProjectReference Include="..\WordRecord.Repository\WordRecord.Repository.csproj" />
-    <ProjectReference Include="..\WorkRecord.Data\WorkRecord.Data.csproj" />
-    <ProjectReference Include="..\WorkRecord.IService\WorkRecord.IService.csproj" />
-    <ProjectReference Include="..\WorkRecord.Service\WorkRecord.Service.csproj" />
+    <PackageReference Include="WordRecord.IRepository" Version="1.0.0" />
+    <PackageReference Include="WordRecord.Repository" Version="1.0.0" />
+    <PackageReference Include="WorkRecord.Data" Version="1.0.0" />
+    <PackageReference Include="WorkRecord.IService" Version="1.0.0" />
+    <PackageReference Include="WorkRecord.Service" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>

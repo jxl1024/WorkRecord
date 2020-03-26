@@ -2,10 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>Edison.Jiang</Authors>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WorkRecord.Model\WorkRecord.Model.csproj" />
+    <PackageReference Include="WorkRecord.Model" Version="1.0.0" />
   </ItemGroup>
 
 </Project>
