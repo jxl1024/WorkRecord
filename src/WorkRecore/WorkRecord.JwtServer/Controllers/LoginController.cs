@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WorkRecord.IService.Service;
 using WorkRecord.JwtServer.Jwt;
@@ -19,6 +16,11 @@ namespace WorkRecord.JwtServer.Controllers
         private readonly ILoginService _service;
         private readonly ITokenHelper _helper;
 
+        /// <summary>
+        /// 通过构造函数注入
+        /// </summary>
+        /// <param name="service"></param>
+        /// <param name="helper"></param>
         public LoginController(ILoginService service,ITokenHelper helper)
         {
             _service = service;
@@ -31,7 +33,11 @@ namespace WorkRecord.JwtServer.Controllers
             return "Success";
         }
 
-
+        /// <summary>
+        /// 验证用户登录信息
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ValidateInfo>  Post([FromBody]User entity)
         {
@@ -40,8 +46,10 @@ namespace WorkRecord.JwtServer.Controllers
             Expression<Func<User, bool>> keySelector = p => p.Account.Equals(entity.Account);
 
             User user = await _service.GetSingleEntityAsync(keySelector);
+
             if (null != user && user.Password.Equals(entity.Password))
             {
+                // 生成Token信息
                 TokenInfo token = _helper.CreateToken(user);
                 validateInfo.Code = 0;
                 validateInfo.Message = "成功";

@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
-using WordRecord.IRepository.Base;
 using WorkRecord.Model.Entity;
 
 namespace WordRecord.IRepository.Repository
 {
-    //public interface ILoginRepository<User>
-    //{
-    //}
-
     public interface ILoginRepository
     {
         /// <summary>

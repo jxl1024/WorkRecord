@@ -13,10 +13,8 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using WordRecord.IRepository.Repository;
 using WordRecord.Repository.Repositories;
 using WorkRecord.Data.Context;
-using WorkRecord.IService.Service;
 using WorkRecord.Model.Jwt;
 using WorkRecord.Service.Service;
 
@@ -53,7 +51,7 @@ namespace WorkRecord.API
                     ValidIssuer = config.Issuer,
                     ValidAudience = config.Audience,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.IssuerSigningKey)),
-                    ClockSkew = TimeSpan.FromMinutes(1)
+                    ClockSkew = TimeSpan.FromMinutes(config.AccessTokenExpiresMinutes)
 
                 };
             });

@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
-using WorkRecord.IService.Base;
 using WorkRecord.Model.Entity;
-using WorkRecord.Model.Jwt;
 
 namespace WorkRecord.IService.Service
 {
-   //public interface ILoginService   : IBaseLoginService<User>
-   // {
-   // }
-
-
     public interface ILoginService
     {
         /// <summary>
