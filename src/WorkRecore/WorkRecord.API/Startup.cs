@@ -22,6 +22,9 @@ namespace WorkRecord.API
 {
     public class Startup
     {
+
+        // 全局跨域策略
+        readonly string MyAllowSpecificOrigins = "MyAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -38,23 +41,32 @@ namespace WorkRecord.API
             Configuration.GetSection("JWT").Bind(config);
             #endregion
 
+            #region 添加跨域服务
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                    // 这里设置的是允许所有的跨域，允许访问Get、Post、Put、Delete方法
+                    builder => builder.AllowAnyOrigin()
+                    .WithMethods("GET", "POST", "PUT", "DELETE"));
+            }); 
+            #endregion
 
             #region 启用JWT认证
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidIssuer = config.Issuer,
-                    ValidAudience = config.Audience,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.IssuerSigningKey)),
-                    ClockSkew = TimeSpan.FromMinutes(config.AccessTokenExpiresMinutes)
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(options =>
+            //{
+            //    options.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidIssuer = config.Issuer,
+            //        ValidAudience = config.Audience,
+            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.IssuerSigningKey)),
+            //        ClockSkew = TimeSpan.FromMinutes(config.AccessTokenExpiresMinutes)
 
-                };
-            });
+            //    };
+            //});
             #endregion
 
 
@@ -129,9 +141,19 @@ namespace WorkRecord.API
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "WorkRecord v1");
             });
 
+
+
+            #region 启用身份认证
             // 启用身份认证
-            app.UseAuthentication();
+            //app.UseAuthentication(); 
+            #endregion
+
             app.UseRouting();
+
+            #region 启用跨域中间件
+            // 启用跨域中间件
+            app.UseCors(MyAllowSpecificOrigins);
+            #endregion
 
             app.UseAuthorization();
 
