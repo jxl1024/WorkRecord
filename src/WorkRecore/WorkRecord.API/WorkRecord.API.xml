@@ -163,6 +163,26 @@
             <param name="entity">日志信息实体</param>
             <returns></returns>
         </member>
+        <member name="T:WorkRecord.API.Filter.GlobalExceptionFilter">
+            <summary>
+            全局异常过滤器
+            </summary>
+        </member>
+        <member name="T:WorkRecord.API.Filter.ApplicationErrorResult">
+            <summary>
+            获取HttpCode状态码
+            </summary>
+        </member>
+        <member name="P:WorkRecord.API.Filter.JsonErrorResponse.Message">
+            <summary>
+            生产环境日志信息
+            </summary>
+        </member>
+        <member name="P:WorkRecord.API.Filter.JsonErrorResponse.DeveloperMessage">
+            <summary>
+            开发环境日志信息
+            </summary>
+        </member>
         <member name="M:WorkRecord.API.Startup.ConfigureContainer(Autofac.ContainerBuilder)">
             <summary>
             使用Autofac替换依赖注入容器

@@ -1,6 +1,9 @@
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using System.IO;
+using System.Reflection;
+using System.Xml;
 
 namespace WorkRecord.API
 {
@@ -8,6 +11,7 @@ namespace WorkRecord.API
     {
         public static void Main(string[] args)
         {
+
             CreateHostBuilder(args).Build().Run();
         }
 

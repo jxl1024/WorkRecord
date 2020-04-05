@@ -41,7 +41,15 @@ namespace WorkRecord.Service.Service
         public async Task<IEnumerable<User>> GetPatgeListAsync<TKey>(int pageIndex, int pageSize, Expression<Func<User, bool>> predicate, bool isAsc, 
             Expression<Func<User, TKey>> keySelector)
         {
-            return await _repository.GetPatgeListAsync(pageIndex, pageSize, predicate, isAsc, keySelector);
+            try
+            {
+                return await _repository.GetPatgeListAsync(pageIndex, pageSize, predicate, isAsc, keySelector);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public async Task<int> UpdateAsync(User entity)

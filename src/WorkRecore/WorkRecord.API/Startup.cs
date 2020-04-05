@@ -1,5 +1,8 @@
 using Autofac;
 using AutoMapper;
+using log4net;
+using log4net.Config;
+using log4net.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,20 +17,34 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using WordRecord.Repository.Repositories;
+using WorkRecord.API.Filter;
+using WorkRecord.Common.Log;
 using WorkRecord.Data.Context;
 using WorkRecord.Model.Jwt;
 using WorkRecord.Service.Service;
 
 namespace WorkRecord.API
 {
+   
+
     public class Startup
     {
-
+        // 定义log4net仓储
+        public static ILoggerRepository repository { get; set; }
         // 全局跨域策略
         readonly string MyAllowSpecificOrigins = "MyAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            #region 配置使用log4net
+            // NETCoreRepository是log4net的仓储名
+            repository = LogManager.CreateRepository("NETCoreRepository");
+            // 读取log4net配置文件
+            XmlConfigurator.Configure(repository, new FileInfo("log4net.config"));
+
+            InitRepository.LogRepository = repository; 
+            #endregion
         }
 
         public IConfiguration Configuration { get; }
@@ -105,7 +122,11 @@ namespace WorkRecord.API
             });
             #endregion
 
-            services.AddControllers();
+            // 添加异常过滤器
+            services.AddControllers(options => 
+            {
+                options.Filters.Add<GlobalExceptionFilter>();
+            });
         }
 
         /// <summary>
