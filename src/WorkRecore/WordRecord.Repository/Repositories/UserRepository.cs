@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using WordRecord.IRepository.Base;
 using WordRecord.IRepository.Repository;
+using WordRecord.IRepository.UnitOfWork;
 using WorkRecord.Data.Context;
 using WorkRecord.Model.Entity;
 
@@ -11,7 +13,8 @@ namespace WordRecord.Repository.Repositories
 {
     public class UserRepository : IUserRepository
     {
-
+        //private readonly IUnitOfWork _unitOfWork;
+        //private readonly IBaseRepository<User> _repository;
         private readonly AppDbContext _dbContext;
 
         /// <summary>

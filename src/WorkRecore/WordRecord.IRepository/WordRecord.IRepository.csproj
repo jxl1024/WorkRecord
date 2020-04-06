@@ -9,4 +9,8 @@
     <PackageReference Include="WorkRecord.Model" Version="1.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WorkRecord.Data\WorkRecord.Data.csproj" />
+  </ItemGroup>
+
 </Project>

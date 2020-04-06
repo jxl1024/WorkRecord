@@ -6,9 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="WordRecord.IRepository" Version="1.0.0" />
     <PackageReference Include="WorkRecord.Data" Version="1.0.0" />
     <PackageReference Include="WorkRecord.Model" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UnitOfWork\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WordRecord.IRepository\WordRecord.IRepository.csproj" />
   </ItemGroup>
 
 </Project>
