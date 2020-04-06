@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -9,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using WorkRecord.IService.Service;
 using WorkRecord.Model.DTO;
 using WorkRecord.Model.Entity;
+using Autofac.Extras.DynamicProxy;
+using WorkRecord.API.AOP;
 
 namespace WorkRecord.API.Controllers
 {
@@ -20,6 +23,7 @@ namespace WorkRecord.API.Controllers
     [Route("api/user")]
     [ApiController]
     [Authorize]
+    // [Intercept(typeof(LogAOP))]
     public class UserController : ControllerBase
     {
         // AutoMapper
@@ -44,6 +48,7 @@ namespace WorkRecord.API.Controllers
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
+        [Description("获取用户信息")]
         public async Task<List<UserDTO>> GetPageList(int pageIndex, int pageSize)
         {
             List<UserDTO> listDto = new List<UserDTO>();

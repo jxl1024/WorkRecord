@@ -1,4 +1,5 @@
 using Autofac;
+using Autofac.Extras.DynamicProxy;
 using AutoMapper;
 using log4net;
 using log4net.Config;
@@ -17,7 +18,9 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using WordRecord.Repository.Repositories;
+using WorkRecord.API.AOP;
 using WorkRecord.API.Filter;
+using WorkRecord.Common.Helper;
 using WorkRecord.Common.Log;
 using WorkRecord.Data.Context;
 using WorkRecord.Model.Jwt;
@@ -33,9 +36,10 @@ namespace WorkRecord.API
         public static ILoggerRepository repository { get; set; }
         // 全局跨域策略
         readonly string MyAllowSpecificOrigins = "MyAllowSpecificOrigins";
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration,IWebHostEnvironment env)
         {
             Configuration = configuration;
+            Env = env;
 
             #region 配置使用log4net
             // NETCoreRepository是log4net的仓储名
@@ -48,11 +52,14 @@ namespace WorkRecord.API
         }
 
         public IConfiguration Configuration { get; }
-
+        // 当前Web Hosting环境
+        public IWebHostEnvironment Env { get; }
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
+            // 注入当前json文件
+            services.AddSingleton(new AppsettingHelper(Env.ContentRootPath, "appsettings.json"));
             #region 读取配置
             JWTConfig config = new JWTConfig();
             Configuration.GetSection("JWT").Bind(config);
@@ -126,6 +133,7 @@ namespace WorkRecord.API
             services.AddControllers(options => 
             {
                 options.Filters.Add<GlobalExceptionFilter>();
+                // options.Filters.Add<GlobalActionFilter>();
             });
         }
 
@@ -135,15 +143,24 @@ namespace WorkRecord.API
         /// <param name="builder"></param>
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            // 批量注册Repository
-            builder.RegisterAssemblyTypes(typeof(UserRepository).Assembly)
-                .Where(t => t.Name.EndsWith("Repository"))
-                .AsImplementedInterfaces();
+            // 获取当前程序运行路径
+            var basePath = AppContext.BaseDirectory;
 
-            // 批量注册Service
-            builder.RegisterAssemblyTypes(typeof(UserService).Assembly)
-             .Where(t => t.Name.EndsWith("Service"))
-             .AsImplementedInterfaces();
+            builder.RegisterType<LogAOP>().EnableInterfaceInterceptors();
+
+            // 获取程序集的完整路径
+            var repositoryDllPath =Path.Combine(basePath,AppsettingHelper.GetValueByKey(new string[] { "DIInfo", "RepositoryDllName" }));
+            var serviceDllPath =Path.Combine(basePath, AppsettingHelper.GetValueByKey(new string[] { "DIInfo", "ServiceDllName" }));
+
+            //通过反射的方式获取WordRecord.Repository.dll程序集信息 批量注册Repository
+            builder.RegisterAssemblyTypes(Assembly.LoadFrom(repositoryDllPath))
+                .AsImplementedInterfaces()
+                .InstancePerDependency()
+                .EnableInterfaceInterceptors();//引入Autofac.Extras.DynamicProxy
+
+            builder.RegisterAssemblyTypes(Assembly.LoadFrom(serviceDllPath))
+              .AsImplementedInterfaces()
+              .InstancePerDependency();
 
         }
 
