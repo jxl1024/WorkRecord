@@ -34,11 +34,11 @@
     <PackageReference Include="WordRecord.Repository" Version="1.0.0" />
     <PackageReference Include="WorkRecord.Data" Version="1.0.0" />
     <PackageReference Include="WorkRecord.IService" Version="1.0.0" />
-    <PackageReference Include="WorkRecord.Service" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\WorkRecord.Common\WorkRecord.Common.csproj" />
+    <ProjectReference Include="..\WorkRecord.Service\WorkRecord.Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>
