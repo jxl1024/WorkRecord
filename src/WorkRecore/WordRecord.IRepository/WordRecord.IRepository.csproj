@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -6,11 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="WorkRecord.Model" Version="1.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\WorkRecord.Data\WorkRecord.Data.csproj" />
+    <ProjectReference Include="..\WorkRecord.Model\WorkRecord.Model.csproj" />
   </ItemGroup>
 
 </Project>

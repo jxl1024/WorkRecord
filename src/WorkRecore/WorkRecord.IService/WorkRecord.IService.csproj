@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="WorkRecord.Model" Version="1.0.0" />
+    <ProjectReference Include="..\WorkRecord.Model\WorkRecord.Model.csproj" />
   </ItemGroup>
 
 </Project>

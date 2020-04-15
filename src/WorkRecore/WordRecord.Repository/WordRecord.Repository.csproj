@@ -6,16 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="WorkRecord.Data" Version="1.0.0" />
-    <PackageReference Include="WorkRecord.Model" Version="1.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="UnitOfWork\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\WordRecord.IRepository\WordRecord.IRepository.csproj" />
+    <ProjectReference Include="..\WorkRecord.Data\WorkRecord.Data.csproj" />
+    <ProjectReference Include="..\WorkRecord.Model\WorkRecord.Model.csproj" />
   </ItemGroup>
 
 </Project>
